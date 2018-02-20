@@ -40,10 +40,16 @@ jobs:
       - attach_workspace:
           at: ~/
       # Using the `run` step, one can execute arbitrary commands
+      - restore_cache:
+          key: node-modules-{{ checksum "yarn.lock" }}
       - run:
           name: Yarn install
           working_directory: frontend/
           command: yarn install
+      - save_cache:
+          key: node-modules-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
       - run:
           name: Run Yarn tests
           working_directory: frontend/
@@ -76,4 +82,5 @@ workflows:
             - checkout
       - deploy:
           requires:
+            - yarn
             - scala
