@@ -6,7 +6,7 @@ import akka.http.scaladsl.server.Directives._
 import akka.util._
 
 trait ExampleRoutes {
-  implicit val timeout: Timeout = 2.seconds
+  implicit val timeout: Timeout = 5.seconds
 
   def routes = {
     pathPrefix("api") {
