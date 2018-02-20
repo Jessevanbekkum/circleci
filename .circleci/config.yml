@@ -41,13 +41,13 @@ jobs:
           at: ~/
       # Using the `run` step, one can execute arbitrary commands
       - restore_cache:
-          key: node-modules-{{ checksum "yarn.lock" }}
+          key: node-modules-{{ checksum "frontend/yarn.lock" }}
       - run:
           name: Yarn install
           working_directory: frontend/
           command: yarn install
       - save_cache:
-          key: node-modules-{{ checksum "yarn.lock" }}
+          key: node-modules-{{ checksum "frontend/yarn.lock" }}
           paths:
             - node_modules
       - run:
