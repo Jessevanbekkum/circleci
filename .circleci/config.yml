@@ -32,6 +32,22 @@ jobs:
           name: Run Scala tests
           working_directory: backend/
           command: sbt test
+  yarn:
+    docker:
+      - image: node:8.6.0
+    steps:
+      # Using the `attach_workspace` step, CircleCI will restore your changes
+      - attach_workspace:
+          at: ~/
+      # Using the `run` step, one can execute arbitrary commands
+      - run:
+          name: Yarn install
+          working_directory: frontend/
+          command: yarn install
+      - run:
+          name: Run Yarn tests
+          working_directory: frontend/
+          command: yarn test
 
   # Define the deploy job
   deploy:
@@ -53,6 +69,9 @@ workflows:
     jobs:
       - checkout
       - scala:
+          requires:
+            - checkout
+      - yarn:
           requires:
             - checkout
       - deploy:
